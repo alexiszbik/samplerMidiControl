@@ -14,7 +14,7 @@ public:
     const int midiValue = map(rawValue, 0, 1023, 0, 127);
 
     if (lastSentValue_ < 0 || abs(midiValue - lastSentValue_) >= kDeadband) {
-      MIDI.sendControlChange(ccNumber_, midiValue, midiChannel_);
+      sendControlChange(ccNumber_, midiValue, midiChannel_);
       lastSentValue_ = midiValue;
     }
   }

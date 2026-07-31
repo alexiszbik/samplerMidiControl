@@ -20,6 +20,11 @@ void setupMIDI() {
   ccLed.setup();
 }
 
+void sendControlChange(uint8_t ccNumber, uint8_t midiValue, uint8_t midiChannel) {
+  MIDI.sendControlChange(ccNumber, midiValue, midiChannel);
+  ccLed.setOn(millis());
+}
+
 void midiLoop() {
   thisTime = millis();
   ccLed.loop(thisTime);
