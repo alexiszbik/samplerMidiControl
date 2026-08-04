@@ -5,16 +5,14 @@
 
 #include "BlinkingLed.h"
 
-extern midi::MidiInterface<midi::SerialMIDI<HardwareSerial>> MIDI;
-
 BlinkingLed ccLed = BlinkingLed(13);
 
 unsigned long thisTime = 0;
 
-MIDI_CREATE_INSTANCE(HardwareSerial, Serial, MIDI);
+MIDI_CREATE_INSTANCE(HardwareSerial, Serial1, MIDI);
 
 void setupMIDI() {
-  Serial.begin(31250);
+  Serial1.begin(31250);
   MIDI.begin(MIDI_CHANNEL_OMNI);
   MIDI.turnThruOn();
   ccLed.setup();

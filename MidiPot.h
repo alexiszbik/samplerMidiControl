@@ -7,22 +7,30 @@ public:
   void begin(uint8_t ccNumber, uint8_t midiChannel) {
     ccNumber_ = ccNumber;
     midiChannel_ = midiChannel;
-    lastSentValue_ = -1;
+    lastSentRawValue_ = -1;
+    smoothedValue_ = 0;
   }
 
   void onValueRead(int rawValue) {
-    const int midiValue = map(rawValue, 0, 1023, 0, 127);
+    if (lastSentRawValue_ < 0) {
+      smoothedValue_ = rawValue;
+    } else {
+      smoothedValue_ += (rawValue - smoothedValue_) >> kSmoothShift;
+    }
 
-    if (lastSentValue_ < 0 || abs(midiValue - lastSentValue_) >= kDeadband) {
+    if (lastSentRawValue_ < 0 || abs(smoothedValue_ - lastSentRawValue_) > kDeadband) {
+      const int midiValue = map(smoothedValue_, 0, 1023, 0, 127);
       sendControlChange(ccNumber_, midiValue, midiChannel_);
-      lastSentValue_ = midiValue;
+      lastSentRawValue_ = smoothedValue_;
     }
   }
 
 private:
   uint8_t ccNumber_ = 0;
   uint8_t midiChannel_ = 1;
-  int lastSentValue_ = -1;
+  int lastSentRawValue_ = -1;
+  int smoothedValue_ = 0;
 
-  static constexpr int kDeadband = 2;
+  static constexpr int kSmoothShift = 3;
+  static constexpr int kDeadband = 16;
 };
