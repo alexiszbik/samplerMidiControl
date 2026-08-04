@@ -14,7 +14,7 @@ public:
     const int midiValue = rawValue >= kThreshold ? 127 : 0;
 
     if (lastSentValue_ < 0 || midiValue != lastSentValue_) {
-      sendControlChange(ccNumber_, midiValue, midiChannel_);
+      sendControlChange(ccNumber_, midiValue, midiChannel_, thisTime);
       lastSentValue_ = midiValue;
     }
   }

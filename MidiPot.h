@@ -20,7 +20,7 @@ public:
 
     if (lastSentRawValue_ < 0 || abs(smoothedValue_ - lastSentRawValue_) > kDeadband) {
       const int midiValue = map(smoothedValue_, 0, 1023, 0, 127);
-      sendControlChange(ccNumber_, midiValue, midiChannel_);
+      sendControlChange(ccNumber_, midiValue, midiChannel_, thisTime);
       lastSentRawValue_ = smoothedValue_;
     }
   }

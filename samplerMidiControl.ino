@@ -41,37 +41,37 @@ void setup() {
   digitalWrite(LED_PIN, LOW);
 }
 
-byte state = 0;
+int state = 0;
 
 void loop() {
   midiLoop();
 
   switch (state) {
-    case 2:
+    case 8:
       {
         uint8_t channel = mux.readNext();
         potController.onPotRead(&mux, channel, mux.getValue(channel));
         break;
       }
-    case 4:
+    case 16:
       {
         uint8_t channel = mux2.readNext();
         potController.onPotRead(&mux2, channel, mux2.getValue(channel));
         break;
       }
-    case 6:
+    case 24:
       {
         uint8_t channel = mux3.readNext();
         toggleController.onToggleRead(&mux3, channel, mux3.getValue(channel));
         break;
       }
-    case 8:
+    case 32:
       {
         int aValue = digitalRead(ARCADE_A_PIN) == LOW ? 1023 : 0;
         extraToggleA.onValueRead(aValue);
         break;
       }
-    case 10:
+    case 40:
       {
         int bValue = digitalRead(ARCADE_B_PIN) == LOW ? 1023 : 0;
         extraToggleB.onValueRead(bValue);
@@ -80,5 +80,5 @@ void loop() {
     default : break;
   }
   state++;
-  if (state >= 12) state = 0;
+  if (state >= 48) state = 0;
 }
