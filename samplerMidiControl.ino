@@ -21,7 +21,6 @@ PotController potController;
 ToggleController toggleController;
 
 void setup() {
-
   pinMode(LED_PIN, OUTPUT);
   digitalWrite(LED_PIN, HIGH);
   mux.begin();
@@ -42,21 +41,38 @@ void setup() {
   digitalWrite(LED_PIN, LOW);
 }
 
+byte state = 0;
+
 void loop() {
   midiLoop();
 
-  uint8_t channel = mux.readNext();
-  potController.onPotRead(&mux, channel, mux.getValue(channel));
-
-  channel = mux2.readNext();
-  potController.onPotRead(&mux2, channel, mux2.getValue(channel));
-
-  channel = mux3.readNext();
-  toggleController.onToggleRead(&mux3, channel, mux3.getValue(channel));
-
-  int aValue = digitalRead(ARCADE_A_PIN) == LOW ? 1023 : 0;
-  int bValue = digitalRead(ARCADE_B_PIN) == LOW ? 1023 : 0;
-
-  extraToggleA.onValueRead(aValue);
-  extraToggleB.onValueRead(bValue);
+  switch (state) {
+    case 2:
+      {
+        uint8_t channel = mux.readNext();
+        potController.onPotRead(&mux, channel, mux.getValue(channel));
+      }
+    case 4:
+      {
+        uint8_t channel = mux2.readNext();
+        potController.onPotRead(&mux2, channel, mux2.getValue(channel));
+      }
+    case 6:
+      {
+        uint8_t channel = mux3.readNext();
+        toggleController.onToggleRead(&mux3, channel, mux3.getValue(channel));
+      }
+    case 8:
+      {
+        int aValue = digitalRead(ARCADE_A_PIN) == LOW ? 1023 : 0;
+        extraToggleA.onValueRead(aValue);
+      }
+    case 10:
+      {
+        int bValue = digitalRead(ARCADE_B_PIN) == LOW ? 1023 : 0;
+        extraToggleB.onValueRead(bValue);
+      }
+  }
+  state++;
+  if (state >= 12) state = 0;
 }
