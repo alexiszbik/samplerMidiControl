@@ -51,27 +51,33 @@ void loop() {
       {
         uint8_t channel = mux.readNext();
         potController.onPotRead(&mux, channel, mux.getValue(channel));
+        break;
       }
     case 4:
       {
         uint8_t channel = mux2.readNext();
         potController.onPotRead(&mux2, channel, mux2.getValue(channel));
+        break;
       }
     case 6:
       {
         uint8_t channel = mux3.readNext();
         toggleController.onToggleRead(&mux3, channel, mux3.getValue(channel));
+        break;
       }
     case 8:
       {
         int aValue = digitalRead(ARCADE_A_PIN) == LOW ? 1023 : 0;
         extraToggleA.onValueRead(aValue);
+        break;
       }
     case 10:
       {
         int bValue = digitalRead(ARCADE_B_PIN) == LOW ? 1023 : 0;
         extraToggleB.onValueRead(bValue);
+        break;
       }
+    default : break;
   }
   state++;
   if (state >= 12) state = 0;
