@@ -20,6 +20,13 @@ MidiToggle extraToggleB;
 PotController potController;
 ToggleController toggleController;
 
+void resetAllControls() {
+  potController.resetSentState();
+  toggleController.resetSentState();
+  extraToggleA.resetSentState();
+  extraToggleB.resetSentState();
+}
+
 void setup() {
   pinMode(LED_PIN, OUTPUT);
   digitalWrite(LED_PIN, HIGH);

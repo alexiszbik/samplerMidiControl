@@ -29,6 +29,12 @@ public:
     }
   }
 
+  void resetSentState() {
+    for (size_t i = 0; i < potCount_; ++i) {
+      pots_[i].resetSentState();
+    }
+  }
+
 private:
   static constexpr size_t kMaxPots = 32;
 

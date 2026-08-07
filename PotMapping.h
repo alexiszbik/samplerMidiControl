@@ -1,6 +1,7 @@
 #pragma once
 
 #include "PotController.h"
+#include "Const.h"
 
 extern Multiplexer mux;
 extern Multiplexer mux2;
@@ -8,33 +9,33 @@ extern Multiplexer mux2;
 // Replace CC numbers with your Bela sampler mapping.
 static const PotMapping kPotMappings[] = {
     // mux (12 channels)
-    {&mux, 0, 1, 1},
-    {&mux, 1, 2, 1},
-    {&mux, 2, 3, 1},
-    {&mux, 3, 4, 1},
-    {&mux, 4, 5, 1},
-    {&mux, 5, 6, 1},
-    {&mux, 6, 7, 1},
-    {&mux, 7, 8, 1},
-    {&mux, 8, 9, 1},
-    {&mux, 9, 10, 1},
-    {&mux, 10, 11, 1},
-    {&mux, 11, 12, 1},
+    {&mux, 0, 10, kMidiChannel},
+    {&mux, 1, 11, kMidiChannel},
+    {&mux, 2, 12, kMidiChannel},
+    {&mux, 3, 13, kMidiChannel},
+    {&mux, 4, 14, kMidiChannel},
+    {&mux, 5, 15, kMidiChannel},
+    {&mux, 6, 16, kMidiChannel},
+    {&mux, 7, 17, kMidiChannel},
+    {&mux, 8, 18, kMidiChannel},
+    {&mux, 9, 19, kMidiChannel},
+    {&mux, 10, 20, kMidiChannel},
+    {&mux, 11, 21, kMidiChannel},
 
     // mux2 (13 channels)
-    {&mux2, 0, 13, 1},
-    {&mux2, 1, 14, 1},
-    {&mux2, 2, 15, 1},
-    {&mux2, 3, 16, 1},
-    {&mux2, 4, 17, 1},
-    {&mux2, 5, 18, 1},
-    {&mux2, 6, 19, 1},
-    {&mux2, 7, 20, 1},
-    {&mux2, 8, 21, 1},
-    {&mux2, 9, 22, 1},
-    {&mux2, 10, 23, 1},
-    {&mux2, 11, 24, 1},
-    {&mux2, 12, 25, 1},
+    {&mux2, 0, 30, kMidiChannel},
+    {&mux2, 1, 31, kMidiChannel},
+    {&mux2, 2, 32, kMidiChannel},
+    {&mux2, 3, 33, kMidiChannel},
+    {&mux2, 4, 34, kMidiChannel},
+    {&mux2, 5, 35, kMidiChannel},
+    {&mux2, 6, 36, kMidiChannel},
+    {&mux2, 7, 37, kMidiChannel},
+    {&mux2, 8, 38, kMidiChannel},
+    {&mux2, 9, 39, kMidiChannel},
+    {&mux2, 10, 40, kMidiChannel},
+    {&mux2, 11, 41, kMidiChannel},
+    {&mux2, 12, 42, kMidiChannel},
 };
 
 static constexpr size_t kPotMappingCount =

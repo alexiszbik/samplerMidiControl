@@ -29,6 +29,12 @@ public:
     }
   }
 
+  void resetSentState() {
+    for (size_t i = 0; i < toggleCount_; ++i) {
+      toggles_[i].resetSentState();
+    }
+  }
+
 private:
   static constexpr size_t kMaxToggles = 16;
 

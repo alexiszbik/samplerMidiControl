@@ -19,6 +19,10 @@ public:
     }
   }
 
+  void resetSentState() {
+    lastSentValue_ = -1;
+  }
+
 private:
   uint8_t ccNumber_ = 0;
   uint8_t midiChannel_ = 1;
