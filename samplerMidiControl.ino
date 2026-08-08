@@ -23,8 +23,6 @@ ToggleController toggleController;
 void resetAllControls() {
   potController.resetSentState();
   toggleController.resetSentState();
-  extraToggleA.resetSentState();
-  extraToggleB.resetSentState();
 }
 
 void setup() {
@@ -37,8 +35,8 @@ void setup() {
   pinMode(ARCADE_A_PIN, INPUT_PULLUP);
   pinMode(ARCADE_B_PIN, INPUT_PULLUP);
 
-  extraToggleA.begin(40, 4);
-  extraToggleB.begin(41, 4);
+  extraToggleA.begin(8, kMidiChannel);
+  extraToggleB.begin(9, kMidiChannel);
 
   setupMIDI();
   potController.begin(kPotMappings, kPotMappingCount);
