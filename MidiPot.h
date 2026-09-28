@@ -2,6 +2,8 @@
 
 #include "MidiInOut.h"
 
+static const int maxPot = 1006;
+
 class MidiPot {
 public:
   void begin(uint8_t ccNumber, uint8_t midiChannel) {
@@ -12,14 +14,16 @@ public:
   }
 
   void onValueRead(int rawValue) {
-    if (lastSentRawValue_ < 0) {
+    if (rawValue == 0) {
+      smoothedValue_ = 0;
+    } else if (lastSentRawValue_ < 0) {
       smoothedValue_ = rawValue;
     } else {
       smoothedValue_ += (rawValue - smoothedValue_) >> kSmoothShift;
     }
 
-    if (lastSentRawValue_ < 0 || abs(smoothedValue_ - lastSentRawValue_) > kDeadband) {
-      const int midiValue = map(smoothedValue_, 0, 1023, 0, 127);
+    if (lastSentRawValue_ < 0 || abs(smoothedValue_ - lastSentRawValue_) > kDeadband || (smoothedValue_ == 0 && lastSentRawValue_ != smoothedValue_)) {
+      const int midiValue = map(smoothedValue_ > maxPot ? maxPot : smoothedValue_, 0, maxPot, 0, 127);
       sendControlChange(ccNumber_, midiValue, midiChannel_, thisTime);
       lastSentRawValue_ = smoothedValue_;
     }
@@ -36,5 +40,5 @@ private:
   int smoothedValue_ = 0;
 
   static constexpr int kSmoothShift = 3;
-  static constexpr int kDeadband = 16;
+  static constexpr int kDeadband = 10;
 };
